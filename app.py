@@ -1,44 +1,32 @@
-import os
+from flask import Flask, redirect, render_template, request, url_for, jsonify
+from tabulate import tabulate
 
-import openai
-from flask import Flask, redirect, render_template, request, url_for
+from api import ScoredStory
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
         story = request.form["story"]
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(story),
-            temperature=0.6,
-        )
-        return redirect(url_for("index", result=response.choices[0].text))
+        score_types = ['general_consistency_score', 'character_consistency_score', 'plot_consistency_score']
+        scored_story = ScoredStory(story)
+        scored_story.calculate_score(score_types)
+
+        # Create a list of tuples containing the field names and their values
+        table_data = [
+            ("General Consistency Score", scored_story.score.general_consistency_score),
+            ("Character Consistency Score", scored_story.score.character_consistency_score),
+            ("Plot Consistency Score", scored_story.score.plot_consistency_score)
+        ]
+
+        # Generate the table using tabulate and convert it to HTML string
+        table_html = tabulate(table_data, headers=["Field", "Value"], tablefmt="html")
+        print(table_html)
+
+        return render_template("index.html", table=table_html)
 
     result = request.args.get("result")
     return render_template("index.html", result=result)
 
-
-def generate_completion(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        temperature=0.6,
-    )
-    return response.choices[0].text
-
-
-def generate_prompt(story):
-    return """Suggest three names for an animal that is a superhero.
-
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: {}
-Names:""".format(
-        story.capitalize()
-    )

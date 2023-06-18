@@ -1,7 +1,7 @@
 from typing import Optional
 from dataclasses import dataclass
 import re
-from app import generate_completion
+from utils import generate_completion
 
 
 @dataclass

@@ -15,6 +15,11 @@
     <textarea type="text" name="story" placeholder="Type your story here." required></textarea>
     <input type="submit" value="Score my story" />
   </form>
+  {% if table %}
+  <div class="result">
+    {{ table | safe }}
+  </div>
+  {% endif %}
   {% if result %}
   <div class="result">{{ result }}</div>
   {% endif %}
