@@ -17,8 +17,8 @@ def index():
         # Create a list of tuples containing the field names and their values
         table_data = [
             ("General Consistency Score", scored_story.score.general_consistency_score),
-            ("Character Consistency Score", scored_story.score.character_consistency_score),
-            ("Plot Consistency Score", scored_story.score.plot_consistency_score)
+            ("Voice Consistency Score", scored_story.score.character_consistency_score),
+            ("Engagement Score", scored_story.score.plot_consistency_score)
         ]
 
         # Generate the table using tabulate and convert it to HTML string
