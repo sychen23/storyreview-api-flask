@@ -25,13 +25,22 @@ class ScoredStory:
             self.score.plot_consistency_score = self.calculate_plot_consistency_score()
 
     def calculate_general_consistency_score(self) -> float:
+        with open('./static/prompt/general_consistency_score.txt', encoding='utf8') as f:
+            prompt_template = f.read()
+        prompt = prompt_template.format(story=self.story_text)
         # TODO(sharon): implement calculation
         return 0.8
 
     def calculate_character_consistency_score(self) -> float:
+        with open('./static/prompt/character_consistency_score.txt', encoding='utf8') as f:
+            prompt_template = f.read()
+        prompt = prompt_template.format(story=self.story_text)
         # TODO(sharon): implement calculation
         return 0.9
 
     def calculate_plot_consistency_score(self) -> float:
+        with open('./static/prompt/plot_consistency_score.txt', encoding='utf8') as f:
+            prompt_template = f.read()
+        prompt = prompt_template.format(story=self.story_text)
         # TODO(sharon): implement calculation
         return 0.7
