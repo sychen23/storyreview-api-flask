@@ -10,7 +10,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
-        animal = request.form["animal"]
+        animal = request.form["story"]
         response = openai.Completion.create(
             model="text-davinci-003",
             prompt=generate_prompt(animal),
@@ -22,7 +22,7 @@ def index():
     return render_template("index.html", result=result)
 
 
-def generate_prompt(animal):
+def generate_prompt(story):
     return """Suggest three names for an animal that is a superhero.
 
 Animal: Cat
@@ -31,5 +31,5 @@ Animal: Dog
 Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
 Animal: {}
 Names:""".format(
-        animal.capitalize()
+        story.capitalize()
     )
