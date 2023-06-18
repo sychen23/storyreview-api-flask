@@ -10,10 +10,10 @@
 
 <body>
   <img src="{{ url_for('static', filename='logo-no-background.png') }}" class="icon" />
-  <h3>Look over my current story</h3>
+  <h3>Look over my current writing</h3>
   <form action="/" method="post">
-    <textarea type="text" name="story" placeholder="Type your story here." required></textarea>
-    <input type="submit" value="Score my story" />
+    <textarea type="text" name="story" placeholder="Enter your writing here." required></textarea>
+    <input type="submit" value="Score my writing" />
   </form>
   {% if table %}
   <div class="result">
