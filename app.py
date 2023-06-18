@@ -22,7 +22,7 @@ def index():
     return render_template("index.html", result=result)
 
 
-async def generate_completion(prompt):
+def generate_completion(prompt):
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
